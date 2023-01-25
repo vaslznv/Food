@@ -101,12 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     }
 
+    function openModal() {
+        modalWindow.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId)
+    }
+
     btnsModal.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // console.log('here')
-            modalWindow.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        })
+        btn.addEventListener('click', openModal)
     })
 
     btnCloseModal.addEventListener('click', closeModal)
@@ -116,4 +118,15 @@ document.addEventListener('DOMContentLoaded', () => {
             closeModal();
         }
     })
+
+    const modalTimerId = setTimeout(openModal, 522000);
+
+    function showModalByScroll() {
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
+            openModal();
+            window.removeEventListener('scroll', showModalByScroll)
+        }
+    }
+
+    window.addEventListener('scroll', showModalByScroll)
 })
