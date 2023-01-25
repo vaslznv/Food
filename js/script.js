@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
     hideTabContent();
     showTabContent();
 
-    tabsParent.addEventListener('click', (event) => {
+    tabsParent.addEventListener('click', eventListener)
+
+    function eventListener(event) {
         const target = event.target;
 
         if (target && target.classList.contains('tabheader__item')) {
@@ -34,9 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-    })
+    }
 
-    const deadline = '2023-01-24'
+    const deadline = '2023-05-24'
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -90,5 +92,28 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimer('.timer', deadline);
     // getTimeRemaining(deadline);
 
+    const btnsModal = document.querySelectorAll('[data-modal]'),
+        btnCloseModal = document.querySelector('[data-close]'),
+        modalWindow = document.querySelector('.modal');
 
+    function closeModal() {
+        modalWindow.style.display = 'none'
+        document.body.style.overflow = '';
+    }
+
+    btnsModal.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // console.log('here')
+            modalWindow.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        })
+    })
+
+    btnCloseModal.addEventListener('click', closeModal)
+
+    modalWindow.addEventListener('click', (event) => {
+        if (event.target === modalWindow) {
+            closeModal();
+        }
+    })
 })
